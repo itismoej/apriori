@@ -1,7 +1,3 @@
-import time
-from functools import wraps
-
-
 class TransactionManager:
     """
     Transaction managers.
@@ -85,14 +81,3 @@ class TransactionManager:
         Returns the item list that the transaction is consisted of.
         """
         return sorted(self.__items)
-
-
-def timeit(func):
-    @wraps(func)
-    def wrapper(*args, **kwargs):
-        start = time.time()
-        result = func(*args, **kwargs)
-        print(f'{time.time() - start}s to {func.__name__}')
-        return result
-
-    return wrapper
