@@ -1,1 +1,4 @@
 *.docx
+.ipynb_checkpoints/
+.idea/
+*.zip
