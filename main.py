@@ -2,7 +2,7 @@ from numpy import *
 from pandas import *
 
 #store each itemset in a list
-f = pandas.read_csv('Project1 - groceries.csv', header=None)
+f = pandas.read_csv('groceries.csv', header=None)
 dataSet = []
 for i in range(0, 9835):
     dataSet.append([str(f.values[i, j]) for j in range(0, 32)])
