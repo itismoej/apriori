@@ -86,16 +86,6 @@ class TransactionManager:
         """
         return sorted(self.__items)
 
-    @staticmethod
-    def create(transactions):
-        """
-        Create the TransactionManager with a transaction instance.
-        If the given instance is a TransactionManager, this returns itself.
-        """
-        if isinstance(transactions, TransactionManager):
-            return transactions
-        return TransactionManager(transactions)
-
 
 def timeit(func):
     @wraps(func)

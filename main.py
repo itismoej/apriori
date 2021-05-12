@@ -60,10 +60,6 @@ def gen_support_records(transaction_manager, min_support, **kwargs):
     # Parse arguments.
     max_length = kwargs.get('max_length')
 
-    # For testing.
-    _create_next_candidates = kwargs.get(
-        '_create_next_candidates', create_next_candidates)
-
     # Process.
     candidates = transaction_manager.initial_candidates()
     length = 1
@@ -79,7 +75,7 @@ def gen_support_records(transaction_manager, min_support, **kwargs):
         length += 1
         if max_length and length > max_length:
             break
-        candidates = _create_next_candidates(relations, length)
+        candidates = create_next_candidates(relations, length)
 
 
 def gen_ordered_statistics(transaction_manager, record):
@@ -145,7 +141,7 @@ def apriori(transactions, **kwargs):
         raise ValueError('minimum support must be > 0')
 
     # Calculate supports.
-    transaction_manager = TransactionManager.create(transactions)
+    transaction_manager = TransactionManager(transactions)
     support_records = gen_support_records(
         transaction_manager, min_support, max_length=max_length)
 
@@ -166,20 +162,11 @@ def apriori(transactions, **kwargs):
 
 def print_rules(rules):
     for item in rules:
-        # first index of the inner list
-        # Contains base item and add item
-        pair = item[0]
-        items = [x for x in pair]
-        print("Rule: " + items[0] + " -> " + items[1])
-
-        # second index of the inner list
-        print("Support: " + str(item[1]))
-
-        # third index of the list located at 0th
-        # of the third index of the inner list
-
-        print("Confidence: " + str(item[2][0][2]))
-        print("Lift: " + str(item[2][0][3]))
+        items = list(item.items)
+        print(f"Rule: {items[0]} -> {items[1]}")
+        print(f"Support: {item.support:.4f}")
+        print(f"Confidence: {item.ordered_statistics[0].confidence:.2f}")
+        print(f"Lift: {item.ordered_statistics[0].lift:.2f}")
         print("=====================================")
 
 
